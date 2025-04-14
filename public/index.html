@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>IT Learning Assistant</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Ласкаво просимо до IT Learning Assistant!</h1>
+</header>
+<main>
+    <p>Тут буде інтерфейс для навчання.</p>
+    <button id="demoBtn">Показати демо-дані</button>
+    <div id="demoData"></div>
+</main>
+<h1>Список користувачів</h1>
+<ul id="userList"></ul>
+<h1>Список студентів</h1>
+<ul id="studentList"></ul>
+<script>
+    fetch('/api/students')
+        .then(res => res.json())
+        .then(students => {
+            const list = document.getElementById('studentList');
+            students.forEach(student => {
+                const li = document.createElement('li');
+                li.textContent = `${student.id}   ${student.email} | Прогрес: ${student.currentProgress}%`;
+                list.appendChild(li);
+            });
+        });
+</script>
+<script src="/js/script.js"></script>
+<div id="reg">
+    <form id="regForm" action="/api/regStudent" method="POST" >
+        <label>Name</label>
+        <input type="text">
+        <label>Email</label>
+        <input type="text">
+        <label>Password</label>
+        <input type="text">
+        <button type="submit">Reg</button>
+    </form>
+</div>
+</body>
+</html>
