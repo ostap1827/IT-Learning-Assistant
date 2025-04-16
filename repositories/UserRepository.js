@@ -4,8 +4,8 @@ const User = require('../entities/User');
 class UserRepository {
     static insertUserToDB(user) {
         db.run(
-            'INSERT INTO users (id, email, passwordHash, role) VALUES (?, ?, ?,?)',
-            [user.userId, user.email, user.passwordHash, user.role]
+            'INSERT INTO users (id, userName, email, passwordHash, role) VALUES (?, ?, ?,?,?)',
+            [user.userId,user.userName, user.email, user.passwordHash, user.role]
         );
     }
 

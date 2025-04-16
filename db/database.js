@@ -8,6 +8,7 @@ db.serialize(() => {
     // Таблиця users (без змін)
     db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
+    userName TEXT,
     email TEXT UNIQUE,
     passwordHash TEXT,
     role TEXT

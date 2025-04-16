@@ -9,6 +9,8 @@ const Student = require("./entities/Student");
 
 const app = express();
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Ініціалізація тестових даних
 db.serialize();
@@ -17,8 +19,7 @@ db.run('DELETE FROM students',);
 db.run('DELETE FROM roadmaps',);
 
 //Тестові данні
-let user1 = new Student('ostap@', '12345', 20);
-console.log(user1.id);
+let user1 = new Student('Ostap','ostap@', '12345', 20);
 StudentRepository.insertStudentToDB(user1);
 let rm = new RoadMap('c#','C# roadmap');
 RoadMapRepository.insertRoadMapToDB(rm);
@@ -36,7 +37,9 @@ app.get('/api/students', (req, res) => {
     });
 });
 app.post('/api/regStudent', (req, res) => {
-    
+    console.log(req.body.userName);
+    StudentRepository.insertStudentToDB(new Student(req.body.userName,req.body.userEmail,req.body.userPassword));
+    res.redirect('/');
 });
 
 app.listen(3000, () => console.log('Сервер запущено на http://localhost:3000'));

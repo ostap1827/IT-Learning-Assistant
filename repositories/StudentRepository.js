@@ -14,7 +14,7 @@ class StudentRepository {
 
     static findAll(callback) {
         db.all(`
-      SELECT u.id, u.email, s.currentProgress
+      SELECT u.id, u.userName, u.email, s.currentProgress
       FROM users u
       JOIN students s ON u.id = s.userId
     `, (err, rows) => {

@@ -25,20 +25,20 @@
             const list = document.getElementById('studentList');
             students.forEach(student => {
                 const li = document.createElement('li');
-                li.textContent = `${student.id}   ${student.email} | Прогрес: ${student.currentProgress}%`;
+                li.textContent = `${student.id}  ${student.userName}  ${student.email} | Прогрес: ${student.currentProgress}%`;
                 list.appendChild(li);
             });
         });
 </script>
 <script src="/js/script.js"></script>
 <div id="reg">
-    <form id="regForm" action="/api/regStudent" method="POST" >
+    <form id="regForm" action="/api/regStudent" method="post" >
         <label>Name</label>
-        <input type="text">
+        <input type="text" name="userName">
         <label>Email</label>
-        <input type="text">
+        <input type="text" name="userEmail">
         <label>Password</label>
-        <input type="text">
+        <input type="text" name="userPassword">
         <button type="submit">Reg</button>
     </form>
 </div>
