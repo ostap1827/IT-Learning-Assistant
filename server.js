@@ -36,11 +36,46 @@ app.get('/api/students', (req, res) => {
         res.json(students);
     });
 });
+app.post('/api/checkUsername', (req, res) => {
+    const checkName = req.body.userName;
+  
+    StudentRepository.findAll((err, students) => {
+      if (err) {
+        res.status(500).json({ error: 'Server error' });
+        return;
+      }
+  
+      const exists = students.some(student => student.userName === checkName);
+      res.json({ exists });
+    });
+  });
+  
 app.post('/api/regStudent', (req, res) => {
-    console.log(req.body.userName);
-    StudentRepository.insertStudentToDB(new Student(req.body.userName,req.body.userEmail,req.body.userPassword));
-    res.redirect('/');
-});
+    const newUserName = req.body.userName;
+  
+    StudentRepository.findAll((err, students) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Помилка сервера');
+        return;
+      }
+  
+      const nameExists = students.some(student => student.userName === newUserName);
+  
+      if (nameExists) {
+        res.status(400).send('');
+        return;
+      }
+  
+      StudentRepository.insertStudentToDB(new Student(
+        req.body.userName,
+        req.body.userEmail,
+        req.body.userPassword
+      ));
+  
+      res.redirect('/');
+    });
+  });
 
 app.listen(3000, () => console.log('Сервер запущено на http://localhost:3000'));
 

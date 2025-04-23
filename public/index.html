@@ -19,6 +19,43 @@
 <h1>Список студентів</h1>
 <ul id="studentList"></ul>
 <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            const userNameInput = document.querySelector('input[name="userName"]');
+            const messageEl = document.getElementById('canOrNot');
+            const regButton = document.querySelector('#regForm button[type="submit"]');
+
+            userNameInput.addEventListener('input', () => {
+                const name = userNameInput.value.trim();
+
+                if (name === '') {
+                    messageEl.textContent = '';
+                    regButton.disabled = true;
+                    return;
+                }
+
+                fetch('/api/checkUsername', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userName: name })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        messageEl.textContent = "Це ім’я вже зайнято!";
+                        messageEl.style.color = "red";
+                        regButton.disabled = true;
+                    } else {
+                        messageEl.textContent = "Ім’я доступне ✔";
+                        messageEl.style.color = "green";
+                        regButton.disabled = false;
+                    }
+                });
+            });
+
+            // На старті вимикаємо кнопку
+            regButton.disabled = true;
+        });
+
     fetch('/api/students')
         .then(res => res.json())
         .then(students => {
@@ -41,6 +78,9 @@
         <input type="text" name="userPassword">
         <button type="submit">Reg</button>
     </form>
+</div>
+<div>
+    <p id="canOrNot"></p>
 </div>
 </body>
 </html>
