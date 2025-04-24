@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     const userNameInput = document.querySelector('input[name="userName"]');
     const userEmailInput = document.querySelector('input[name="userEmail"]');
@@ -75,6 +76,30 @@ document.addEventListener("DOMContentLoaded", () => {
     userNameInput.addEventListener('input', validateInputs);
     userEmailInput.addEventListener('input', validateInputs);
     userPasswordInput.addEventListener('input', validateInputs);
+});
+
+fetch('/api/roadmaps')
+    .then(res => res.json())
+        .then(roadmaps =>{
+            const list = document.getElementById('roadmaps');
+            roadmaps.forEach(roadmap => {
+                const divOfMaps = document.createElement('div');
+                divOfMaps.id = "divOfMaps";
+                const li = document.createElement('li');
+                li.textContent = '';
+
+                const titleText = document.createElement('h2')
+                titleText.textContent = roadmap.title;
+                li.appendChild(titleText);
+
+                const descriptionText = document.createTextNode(`Опис: ${roadmap.description}.`);
+                li.appendChild(descriptionText);
+
+                divOfMaps.appendChild(li);
+                list.appendChild(divOfMaps);
+        
+            });
+            
 });
 
 fetch('/api/students')

@@ -36,6 +36,15 @@ app.get('/api/students', (req, res) => {
         res.json(students);
     });
 });
+
+app.get('/api/roadmaps', (req,res) => {
+  RoadMapRepository.findAll((err, roadmaps) => {
+    if (err) return res.status(500).json({error: err.message});
+    res.json(roadmaps);
+  });
+});
+
+
 app.post('/api/checkUserData', (req, res) => {
   const { userName, email } = req.body;
 
