@@ -18,56 +18,7 @@
 <ul id="userList"></ul>
 <h1>Список студентів</h1>
 <ul id="studentList"></ul>
-<script>
-            document.addEventListener('DOMContentLoaded', () => {
-            const userNameInput = document.querySelector('input[name="userName"]');
-            const messageEl = document.getElementById('canOrNot');
-            const regButton = document.querySelector('#regForm button[type="submit"]');
-
-            userNameInput.addEventListener('input', () => {
-                const name = userNameInput.value.trim();
-
-                if (name === '') {
-                    messageEl.textContent = '';
-                    regButton.disabled = true;
-                    return;
-                }
-
-                fetch('/api/checkUsername', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userName: name })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.exists) {
-                        messageEl.textContent = "Це ім’я вже зайнято!";
-                        messageEl.style.color = "red";
-                        regButton.disabled = true;
-                    } else {
-                        messageEl.textContent = "Ім’я доступне ✔";
-                        messageEl.style.color = "green";
-                        regButton.disabled = false;
-                    }
-                });
-            });
-
-            // На старті вимикаємо кнопку
-            regButton.disabled = true;
-        });
-
-    fetch('/api/students')
-        .then(res => res.json())
-        .then(students => {
-            const list = document.getElementById('studentList');
-            students.forEach(student => {
-                const li = document.createElement('li');
-                li.textContent = `${student.id}  ${student.userName}  ${student.email} | Прогрес: ${student.currentProgress}%`;
-                list.appendChild(li);
-            });
-        });
-</script>
-<script src="/js/script.js"></script>
+<script src="./js/scrypt.js"></script>
 <div id="reg">
     <form id="regForm" action="/api/regStudent" method="post" >
         <label>Name</label>

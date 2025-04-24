@@ -36,19 +36,33 @@ app.get('/api/students', (req, res) => {
         res.json(students);
     });
 });
-app.post('/api/checkUsername', (req, res) => {
-    const checkName = req.body.userName;
-  
-    StudentRepository.findAll((err, students) => {
-      if (err) {
-        res.status(500).json({ error: 'Server error' });
-        return;
-      }
-  
-      const exists = students.some(student => student.userName === checkName);
-      res.json({ exists });
-    });
+app.post('/api/checkUserData', (req, res) => {
+  const { userName, email } = req.body;
+
+  StudentRepository.findAll((err, students) => {
+    if (err) {
+      return res.status(500).json({ error: 'Server error' });
+    }
+
+    const result = {
+      nameExists: false,
+      emailExists: false
+    };
+
+    if (email) {
+      result.emailExists = students.some(student => student.email === email);
+    }
+
+    if (userName) {
+      result.nameExists = students.some(student => student.userName === userName);
+    }
+
+    
+
+    res.json(result);
   });
+});
+
   
 app.post('/api/regStudent', (req, res) => {
     const newUserName = req.body.userName;
