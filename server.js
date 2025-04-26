@@ -45,6 +45,7 @@ app.get('/api/roadmaps', (req,res) => {
 });
 
 
+
 app.post('/api/checkUserData', (req, res) => {
   const { userName, email } = req.body;
 
@@ -84,8 +85,13 @@ app.post('/api/regStudent', (req, res) => {
       }
   
       const nameExists = students.some(student => student.userName === newUserName);
+      const emailExists = students.some(student => student.email === email);
   
       if (nameExists) {
+        res.status(400).send('');
+        return;
+      }
+      if (emailExists){
         res.status(400).send('');
         return;
       }
@@ -102,4 +108,25 @@ app.post('/api/regStudent', (req, res) => {
 
 app.listen(3000, () => console.log('Сервер запущено на http://localhost:3000'));
 
+app.post("/api/createNewCourse", (req,res) => {
+  const newCourseTopic = req.body.course_topic;
 
+  RoadMapRepository.findAll((err,roadmap) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send('');
+    };
+    const topicExists = roadmap.some(roadmap => roadmap.title === newCourseTopic)
+    if (topicExists) {
+      res.status(400).send('');
+      return;
+    };
+
+    RoadMapRepository.insertRoadMapToDB(new RoadMap(
+      req.body.course_topic,
+      req.body.course_description
+    ));
+
+    res.redirect('/');
+  });
+});

@@ -1,0 +1,35 @@
+      
+<!DOCTYPE html>
+<html lang="uk"> 
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styleForSecondPage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створити Новий Курс</title>
+</head>
+<body>
+
+    <form action="/api/createNewCourse" method="post">
+
+        <h1>Створити Новий Курс</h1>
+
+        <div class="form-group">
+            <label for="courseTopic">Назва курсу:</label> 
+            <input type="text" id="courseTopic" name="course_topic" placeholder="Напр., Вступ до HTML" required>
+        </div>
+
+        <div class="form-group">
+            <label for="courseDescription">Опис курсу:</label> 
+            <textarea id="courseDescription" name="course_description" placeholder="Введіть короткий опис змісту курсу..." required></textarea>
+        </div>
+
+        <div>
+            <button type="submit">Створити Курс</button>
+        </div>
+
+    </form>
+
+</body>
+</html>
+
+    
