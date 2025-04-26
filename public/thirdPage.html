@@ -1,0 +1,171 @@
+      
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видалити Курс</title>
+    <link rel="stylesheet" href="/css/styleForThirdPage.css">
+</head>
+<body>
+
+    <h1>Видалити курс:</h1>
+
+    <div id="course-list-container">
+        <!-- Курси будуть додані сюди за допомогою JavaScript -->
+        <p>Завантаження курсів...</p>
+    </div>
+
+    <div id="selection-info">
+        Вибраний курс: <span id="selected-course-name">Не вибрано</span>
+        <button id="delete-button" disabled>Видалити</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const listContainer = document.getElementById('course-list-container');
+            const selectedCourseSpan = document.getElementById('selected-course-name');
+            const deleteButton = document.getElementById('delete-button');
+
+            let selectedCourseId = null; // Змінна для зберігання ID вибраного курсу
+            let selectedCourseTitle = null; // Змінна для зберігання назви вибраного курсу
+
+            // Функція для оновлення стану вибору
+            function updateSelection(courseElement, roadmap) {
+                // 1. Зняти виділення з усіх інших елементів
+                const currentlySelected = listContainer.querySelector('.course-item.selected');
+                if (currentlySelected) {
+                    currentlySelected.classList.remove('selected');
+                }
+
+                // 2. Виділити клікнутий елемент
+                courseElement.classList.add('selected');
+
+                // 3. Зберегти ID та назву і відобразити назву
+                selectedCourseId = roadmap._id || roadmap.id; // Використовуйте _id або id, залежно від вашого API
+                selectedCourseTitle = roadmap.title;
+                selectedCourseSpan.textContent = `"${selectedCourseTitle}"`;
+
+                // 4. Активувати кнопку "Видалити"
+                deleteButton.disabled = false;
+
+                console.log(`Вибрано курс: ID = ${selectedCourseId}, Назва = ${selectedCourseTitle}`);
+            }
+
+            // Функція для видалення курсу (викликається при натисканні кнопки)
+            function deleteSelectedCourse() {
+                if (!selectedCourseId) {
+                    alert('Будь ласка, спочатку виберіть курс для видалення.');
+                    return;
+                }
+
+                // Запит підтвердження перед видаленням
+                if (confirm(`Ви впевнені, що хочете видалити курс "${selectedCourseTitle}"?`)) {
+                    console.log(`Надсилається запит на видалення курсу з ID: ${selectedCourseId}`);
+
+                    // --- Тут буде ваш fetch запит на видалення ---
+                    fetch(`/api/deleteCourse/${selectedCourseId}`, { // Припускаємо такий ендпоінт для видалення
+                        method: 'DELETE',
+                        // Можливо, потрібні headers, наприклад, для аутентифікації
+                        // headers: {
+                        //     'Authorization': 'Bearer ваш_токен'
+                        // }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            // Якщо сервер повернув помилку (статус не 2xx)
+                            throw new Error(`Помилка видалення: ${response.statusText} (Статус: ${response.status})`);
+                        }
+                        // Перевіряємо, чи сервер повернув JSON, чи просто успішний статус
+                        // Деякі API повертають 204 No Content без тіла відповіді
+                        if (response.status === 204) {
+                            return null; // Немає JSON для парсингу
+                        }
+                        return response.json(); // Або парсимо JSON, якщо він є
+                    })
+                    .then(data => {
+                         // Успішне видалення
+                        console.log('Курс успішно видалено:', data);
+                        alert(`Курс "${selectedCourseTitle}" успішно видалено!`);
+
+                        // Оновити список: видалити елемент з DOM або перезавантажити список
+                        const itemToRemove = listContainer.querySelector(`.course-item[data-id="${selectedCourseId}"]`);
+                        if(itemToRemove) {
+                            itemToRemove.remove();
+                        }
+
+                        // Скинути вибір
+                        selectedCourseId = null;
+                        selectedCourseTitle = null;
+                        selectedCourseSpan.textContent = 'Не вибрано';
+                        deleteButton.disabled = true;
+
+                        // Необов'язково: якщо список порожній після видалення
+                        if (listContainer.children.length === 0) {
+                             listContainer.innerHTML = '<p>Немає доступних курсів.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Помилка під час видалення курсу:', error);
+                        alert(`Не вдалося видалити курс. Помилка: ${error.message}`);
+                    });
+                    // --- Кінець fetch запиту ---
+                }
+            }
+
+            // Додаємо слухача подій до кнопки "Видалити"
+            deleteButton.addEventListener('click', deleteSelectedCourse);
+
+            // --- Ваш код для отримання та відображення списку ---
+            fetch('/api/roadmaps')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP помилка! Статус: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(roadmaps => {
+                    listContainer.innerHTML = ''; // Очищуємо контейнер перед додаванням нових елементів
+
+                    if (roadmaps.length === 0) {
+                         listContainer.innerHTML = '<p>Немає доступних курсів.</p>';
+                         return;
+                    }
+
+                    roadmaps.forEach(roadmap => {
+                        // --- Створення елементів ---
+                        const courseItemDiv = document.createElement('div');
+                        courseItemDiv.classList.add('course-item'); // Додаємо клас для стилізації та вибору
+                        // Зберігаємо ID та назву в data-атрибутах для легкого доступу
+                        courseItemDiv.dataset.id = roadmap._id || roadmap.id; // Важливо: використовуйте правильний ідентифікатор
+                        courseItemDiv.dataset.title = roadmap.title;
+
+                        const titleElement = document.createElement('h2');
+                        titleElement.textContent = roadmap.title;
+
+                        const descriptionElement = document.createElement('p'); // Використовуємо <p> для опису
+                        descriptionElement.textContent = roadmap.description || 'Опис відсутній'; // Додаємо текст за замовчуванням
+
+                        // --- Додавання елементів до DOM ---
+                        courseItemDiv.appendChild(titleElement);
+                        courseItemDiv.appendChild(descriptionElement);
+                        listContainer.appendChild(courseItemDiv);
+
+                        // --- Додавання обробника кліку для вибору ---
+                        courseItemDiv.addEventListener('click', () => {
+                            updateSelection(courseItemDiv, roadmap);
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error("Не вдалося завантажити курси:", error);
+                    listContainer.innerHTML = `<p style="color: red;">Помилка завантаження курсів: ${error.message}</p>`;
+                });
+            // --- Кінець коду для отримання даних ---
+        });
+    </script>
+
+</body>
+</html>
+
+    
