@@ -1,0 +1,93 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Кращий набір шрифтів */
+    background-color: #f4f7f6; /* Світло-сірий фон */
+    margin: 0; /* Забираємо відступи за замовчуванням */
+    padding: 20px; /* Додаємо невеликий відступ */
+    display: flex; /* Використовуємо Flexbox для центрування */
+    justify-content: center; /* Центруємо по горизонталі */
+    align-items: center; /* Центруємо по вертикалі */
+    min-height: 100vh; /* Мінімальна висота = висота екрану */
+}
+
+/* --- Стилі для контейнера форми --- */
+form {
+    background-color: #ffffff; /* Білий фон для форми */
+    padding: 30px 40px; /* Внутрішні відступи */
+    border-radius: 8px; /* Закруглені кути */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
+    max-width: 500px; /* Максимальна ширина форми */
+    width: 100%; /* Займає всю доступну ширину до max-width */
+}
+
+/* --- Стилі для заголовка --- */
+h1 {
+    text-align: center; /* Центруємо текст заголовка */
+    color: #333; /* Темно-сірий колір тексту */
+    margin-bottom: 25px; /* Відступ знизу */
+}
+
+/* --- Стилі для групи "мітка + поле вводу" --- */
+.form-group {
+    margin-bottom: 20px; /* Збільшений відступ між групами */
+}
+
+/* --- Стилі для міток (label) --- */
+label {
+    display: block;
+    margin-bottom: 8px; /* Збільшений відступ під міткою */
+    font-weight: bold;
+    color: #555; /* Трохи світліший сірий */
+}
+
+/* --- Загальні стилі для полів вводу та текстової області --- */
+input[type="text"],
+textarea {
+    width: 100%; /* Займають всю ширину контейнера */
+    padding: 12px; /* Збільшені внутрішні відступи */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* padding і border входять у загальну ширину */
+    font-size: 1rem; /* Розмір шрифту як у основного тексту */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Плавні переходи */
+}
+
+/* --- Стилі для текстової області --- */
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* --- Стилі для полів при фокусі (коли користувач клікає) --- */
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #007bff; /* Змінюємо колір рамки на синій */
+    outline: none; /* Забираємо стандартний контур браузера */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Додаємо легку синю тінь */
+}
+
+/* --- Стилі для кнопки --- */
+button {
+    display: block; /* Робимо кнопку блочним елементом */
+    width: 100%; /* Займає всю ширину */
+    padding: 12px 15px;
+    background-color: #28a745; /* Зелений колір */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem; /* Трохи більший шрифт */
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease; /* Плавні переходи */
+}
+
+/* --- Стилі для кнопки при наведенні курсора --- */
+button:hover {
+    background-color: #218838; /* Темніший зелений */
+}
+
+/* --- Стилі для кнопки при натисканні --- */
+button:active {
+    background-color: #1e7e34; /* Ще темніший зелений */
+    transform: scale(0.99); /* Легке зменшення */
+}

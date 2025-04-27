@@ -1,0 +1,90 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #f4f7f6;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+h2 { /* Стиль для назви курсу */
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+#course-list-container {
+    border: 2px solid black;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    max-height: 400px; /* Обмеження висоти, якщо список довгий */
+    overflow-y: auto; /* Додає прокрутку, якщо вміст не влазить */
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.course-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer; /* Показує, що на елемент можна клікнути */
+    transition: background-color 0.2s ease; /* Плавна зміна фону */
+    margin-bottom: 5px; /* Невеликий відступ між курсами */
+    border-radius: 3px;
+}
+
+.course-item:last-child {
+    border-bottom: none; /* Забираємо лінію для останнього елемента */
+}
+
+.course-item:hover {
+    background-color: #f0f0f0; /* Світлий фон при наведенні */
+}
+
+.course-item.selected {
+    background-color: #d6eaff; /* Синій фон для вибраного елемента */
+    border-left: 4px solid #007bff; /* Синя лінія зліва */
+    padding-left: 11px; /* Компенсуємо border-left */
+}
+
+.course-item p { /* Стиль для опису */
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    color: #555;
+}
+
+#selection-info {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#selected-course-name {
+    color: #0056b3;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+#delete-button {
+    background-color: #dc3545; /* Червоний колір для видалення */
+    color: white;
+    margin-left: 10px; /* Відступ від тексту "Вибраний курс" */
+}
+
+#delete-button:hover {
+    background-color: #c82333; /* Темніший червоний при наведенні */
+}
+
+#delete-button:disabled { /* Стиль для неактивної кнопки */
+    background-color: #ccc;
+    cursor: not-allowed;
+}

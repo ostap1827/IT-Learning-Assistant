@@ -11,26 +11,21 @@
 </header>
 <main>
     <p>Тут буде інтерфейс для навчання.</p>
-    <button id="demoBtn">Показати демо-дані</button>
-    <div id="demoData"></div>
+    <a href="secondPage.html" id= "demoBtn" >
+        <button id="demoBtn">Додати курс</button>
+    </a>
+
+    <a href="thirdPage.html" id= "demoBtn" >
+        <button id="demoBtn">Видалити курс</button>
+    </a>
+
+    <div id="roadmaps"></div>
 </main>
 <h1>Список користувачів</h1>
 <ul id="userList"></ul>
 <h1>Список студентів</h1>
 <ul id="studentList"></ul>
-<script>
-    fetch('/api/students')
-        .then(res => res.json())
-        .then(students => {
-            const list = document.getElementById('studentList');
-            students.forEach(student => {
-                const li = document.createElement('li');
-                li.textContent = `${student.id}  ${student.userName}  ${student.email} | Прогрес: ${student.currentProgress}%`;
-                list.appendChild(li);
-            });
-        });
-</script>
-<script src="/js/script.js"></script>
+<script src="./js/scrypt.js"></script>
 <div id="reg">
     <form id="regForm" action="/api/regStudent" method="post" >
         <label>Name</label>
@@ -41,6 +36,9 @@
         <input type="text" name="userPassword">
         <button type="submit">Reg</button>
     </form>
+</div>
+<div>
+    <p id="canOrNot"></p>
 </div>
 </body>
 </html>
