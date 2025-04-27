@@ -29,5 +29,12 @@ db.serialize(() => {
     studentId INTEGER,
     FOREIGN KEY (studentId) REFERENCES students(userId)
   )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS roadmapitem (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    roadMapId INTEGER,
+    FOREIGN KEY (roadMapId) REFERENCES roadmaps(id)
+  )`);
 });
 module.exports = db;
