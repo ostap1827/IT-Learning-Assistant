@@ -36,5 +36,20 @@ db.serialize(() => {
     roadMapId INTEGER,
     FOREIGN KEY (roadMapId) REFERENCES roadmaps(id)
   )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS resourcestypes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    typeTitle TEXT NOT NULL,
+    roadMapItemId INTEGER,
+    FOREIGN KEY (roadMapItemId) REFERENCES roadmapitem(id)
+  )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS learningresources (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    resourcesTypeId INTEGER,
+    FOREIGN KEY (resourcesTypeId) REFERENCES resourcestypes(id)
+  )`);
 });
 module.exports = db;
