@@ -78,6 +78,7 @@ app.post('/api/checkUserData', (req, res) => {
   
 app.post('/api/regStudent', (req, res) => {
     const newUserName = req.body.userName;
+    const email = req.body.email;
   
     StudentRepository.findAll((err, students) => {
       if (err) {
