@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IT Roadmap</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <nav class="navbar">
+          <a href="#" class="logo">IT<span>Roadmap</span></a>
+          <ul class="nav-links">
+            <li><a href="#about">Про нас</a></li>
+            <li><a href="#features">Функціонал</a></li>
+            <li><a href="#" id="loginBtn">Увійти</a></li>
+            <li><a href="#" class="btn" id="registerBtn">Регєстрація</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Модальное вікно для входу -->
+    <div class="modal" id="loginModal">
+      <div class="modal-content">
+        <span class="close" id="closeLoginModal">&times;</span>
+        <h2>Вхід в аккаунт</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Пароль</label>
+            <input
+              type="password"
+              id="loginPassword"
+              class="form-control"
+              required
+            />
+          </div>
+          <button type="submit" class="btn">Увійти</button>
+        </form>
+        <p style="margin-top: 1rem; text-align: center">
+          Не має аккаунта?
+          <a href="#" id="showRegisterModal">Зареєструватись</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Модальное окно для регистрации -->
+    <div class="modal" id="registerModal">
+      <div class="modal-content">
+        <span class="close" id="closeRegisterModal">&times;</span>
+        <h2>Реєстрація</h2>
+        <form id="registerForm" action="/api/regStudent" method="post">
+          <div class="form-group">
+            <label for="registerName">Імя</label>
+            <input
+              type="text"
+              id="registerName"
+              class="form-control"
+              name="userName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">Email</label>
+            <input
+              type="email"
+              id="registerEmail"
+              class="form-control"
+              name="userEmail"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Пароль</label>
+            <input
+              type="password"
+              id="registerPassword"
+              class="form-control"
+              name="userPassword"
+              required
+            />
+          </div>
+          <button type="submit" class="btn">Зареєструватися</button>
+        </form>
+        <p style="margin-top: 1rem; text-align: center">
+          Є аккаунт? <a href="#" id="showLoginModal">Увійти</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Професіональний розвиток в IT став простішим</h1>
+          <p>
+            Індивідуальні дорожні карти, корисні ресурси і спільнота однодумців
+          </p>
+          <a href="#" class="btn" id="startBtn">Розпочати</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+      <div class="container">
+        <h2 class="section-title">Про проект</h2>
+        <div class="about-content">
+          <div>
+            <h3>Що таке ITRoadmap?</h3>
+            <p>
+              ITRoadmap - це навчальна платформа, створена для допомоги
+              початківцям і досвідченим спеціалістам в плануванні і розвитку
+              своеї карєри в сфері інформаційних технологій.
+            </p>
+            <p>
+              Наша мета - зробити IT-навчання структурованим, ціленаправленим і
+              ефективним. Ми зібрали найкращі практики, матеріали і створили
+              детальні дорожні карти для різних напрямків розробки.
+            </p>
+            <h3>Цілі проекту:</h3>
+            <ul>
+              <li>Допомогти новачкам визначитися з напрямком у IT</li>
+              <li>Надати структуровані навчальні плани</li>
+              <li>Зібрати якісні освітні ресурси</li>
+              <li>Створити спільноту для взаємної підтримки</li>
+              <li>Відстежувати прогрес і мотивувати до розвитку</li>
+            </ul>
+          </div>
+          <img
+            src="/api/placeholder/500/300"
+            alt="IT Education"
+            class="about-img"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+      <div class="container">
+        <h2 class="section-title">Функціонал платформи</h2>
+        <div class="features">
+          <div class="feature-card">
+            <i>📝</i>
+            <h3>Персональний профіль</h3>
+            <p>
+              Створіть особистий кабінет для відслідковування прогрессу і
+              збереження досягнень
+            </p>
+          </div>
+          <div class="feature-card">
+            <i>🗺️</i>
+            <h3>Дорожні карти</h3>
+            <p>
+              Детальні плани навчання для різних IT-спеціальностей і напрямків
+            </p>
+          </div>
+          <div class="feature-card">
+            <i>📚</i>
+            <h3>Навчальні ресурси</h3>
+            <p>
+              Кращі книги, курси, відеоуроки і статті для кожного етапу навчання
+            </p>
+          </div>
+          <div class="feature-card">
+            <i>📊</i>
+            <h3>Статистика і аналітика</h3>
+            <p>
+              Відслідковуйте свій прогрес і отримуйте персональні рекомендації
+            </p>
+          </div>
+          <div class="feature-card">
+            <i>👥</i>
+            <h3>Спільнота</h3>
+            <p>Обговорюйте питання з однодумцями і отримуйте підтримку</p>
+          </div>
+          <div class="feature-card">
+            <i>🔍</i>
+            <h3>Підбір напрямків</h3>
+            <p>Вибирайте професію і спеціалізацію виходячи з своїх інтересів</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>
