@@ -28,10 +28,10 @@
       <div class="modal-content">
         <span class="close" id="closeLoginModal">&times;</span>
         <h2>Вхід в аккаунт</h2>
-        <form id="loginForm">
+        <form id="loginForm" action="api/login" method="POST">
           <div class="form-group">
             <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" class="form-control" required />
+            <input type="email" id="loginEmail" class="form-control" name="email" required />
           </div>
           <div class="form-group">
             <label for="loginPassword">Пароль</label>
@@ -39,6 +39,7 @@
               type="password"
               id="loginPassword"
               class="form-control"
+              name="password"
               required
             />
           </div>

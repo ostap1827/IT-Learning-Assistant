@@ -68,24 +68,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Обработка форм
-  document.getElementById("loginForm").addEventListener("submit", function (e) {
+  document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
-    // Здесь должна быть логика входа
-    closeModal(loginModal);
-    // Показываем dashboard после входа
-    window.location.href = "dashboard.html";
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        closeModal(loginModal);
+        window.location.href = '/dashboard';
+      } else {
+        alert(data.error || 'Помилка входу');
+      }
+    } catch (error) {
+      console.error('Помилка:', error);
+      alert('Сталася помилка при вході');
+    }
   });
 
-  document
-    .getElementById("registerForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
-      // Здесь должна быть логика регистрации
-      closeModal(registerModal);
-      // Показываем dashboard после регистрации
-      window.location.href = "dashboard.html";
-    });
+  // document
+  //   .getElementById("registerForm")
+  //   .addEventListener("submit", function (e) {
+  //     e.preventDefault();
+  //     // Здесь должна быть логика регистрации
+  //     closeModal(registerModal);
+  //     // Показываем dashboard после регистрации
+  //     window.location.href = "dashboard.html";
+  //   });
 
   // Выход из системы
   document.getElementById("logoutBtn").addEventListener("click", function (e) {

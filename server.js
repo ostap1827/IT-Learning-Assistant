@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const StudentRepository = require('./repositories/StudentRepository');
 const RoadMapRepository = require('./repositories/RoadMapRepository');
 const UserRepository = require('./repositories/UserRepository');
@@ -11,6 +12,12 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(session({
+  secret: '1111', // Ключ для підпису сесії (замініть на свій)
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // У продакшені використовуйте `secure: true` для HTTPS
+}));
 
 // Ініціалізація тестових даних
 db.serialize();
@@ -30,6 +37,32 @@ RoadMapRepository.insertRoadMapToDB(rm2);
 // API
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/api/user', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json(null);
+  }
+  res.json(req.session.user);
+});
+
+// Вихід
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Не вдалося вийти' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ success: true });
+  });
+});
+
+// Оновіть маршрут dashboard для відправлення HTML
+app.get('/dashboard', (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/');
+  }
+  res.sendFile(__dirname + '/public/dashboard.html');
 });
 
 app.get('/api/students', (req, res) => {
@@ -72,6 +105,43 @@ app.post('/api/checkUserData', (req, res) => {
     
 
     res.json(result);
+  });
+});
+
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+
+  StudentRepository.findByEmail(email, (err, studentData) => {
+    if (err) {
+      return res.status(500).json({ error: 'Помилка сервера' });
+    }
+
+    if (!studentData || !studentData.user) {
+      return res.status(401).json({ error: 'Користувача не знайдено' });
+    }
+
+    // Перевірка пароля (реальний додаток - використовуйте bcrypt.compare!)
+    if (studentData.user.passwordHash !== password) {
+      return res.status(401).json({ error: 'Невірний пароль' });
+    }
+
+    // Зберігаємо дані в сесії
+    req.session.user = {
+      id: studentData.user.id,
+      name: studentData.user.userName,
+      email: studentData.user.email,
+      role: studentData.user.role,
+      progress: studentData.student?.currentProgress || 0
+    };
+
+    // Повертаємо успішну відповідь з даними
+    res.json({
+      success: true,
+      redirect: '/dashboard',
+      user: req.session.user
+    });
+
+
   });
 });
 

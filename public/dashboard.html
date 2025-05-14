@@ -24,10 +24,10 @@
       <div class="dashboard-header">
         <div class="container">
           <div class="user-profile">
-            <div class="user-avatar">U</div>
+            <div class="user-avatar" id="userAvatar">U</div>
             <div>
-              <h3 class="user-name">Імя Користувача</h3>
-              <p>Рівень: Початківець</p>
+              <h3 class="user-name" id="userName">Імя Користувача</h3>
+              <p>Рівень: <span id="userLevel">Початківець</span></p>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
                 >Статистика</a
               >
             </li>
-            <li><a href="#" id="logoutBtn">Вийти</a></li>
+            <li><a href="#" id="logoutBtn!!!!!!!!!!!!">Вийти</a></li>
           </ul>
         </div>
       </div>
@@ -78,7 +78,7 @@
                   type="text"
                   id="fullName"
                   class="form-control"
-                  value="Имя пользователя"
+                  value=""
                 />
               </div>
               <div class="form-group">
@@ -87,7 +87,7 @@
                   type="email"
                   id="email"
                   class="form-control"
-                  value="user@example.com"
+                  value=""
                 />
               </div>
               <div class="form-group">
@@ -106,5 +106,6 @@
     </div>
 
     <script src="./js/script.js"></script>
+    <script src="./js/dashboard.js"></script>
   </body>
 </html>
